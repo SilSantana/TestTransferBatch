@@ -11,6 +11,8 @@ namespace TransferBatch.Services
     public abstract class TransferFileWriterService
     {
 
+        private const string FILENAME = "commission.csv";
+
         // this method is responsible for writing the commission file
         public static void WriteTransferFile(string? filePath, List<TransferCommision> transferCommisions)
         {           
