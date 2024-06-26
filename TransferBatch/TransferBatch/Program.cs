@@ -12,6 +12,9 @@ string? filePath = Console.ReadLine();
 var accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
 
 
+CommissionCalculateService.CalculateCommission(accountTransfers);
+
+
 Console.WriteLine("***************** End Calculator Account Transfer Commission ******************************");
 
 

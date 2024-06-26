@@ -1,4 +1,6 @@
-﻿using TransferBatch.Models;
+﻿using System.Globalization;
+using TransferBatch.Models;
+using TransferBatch.Validations;
 
 namespace TransferBatch.Services
 {
@@ -11,28 +13,24 @@ namespace TransferBatch.Services
             try
             {
 
-                if (string.IsNullOrEmpty(filePath))                
-                    throw new Exception("The file path is empty, please provide the file path!");
-                
+                FileValidations.ValidateFilePath(filePath);
 
-                if (!filePath.EndsWith(".csv"))                
-                    throw new Exception("The file extension is invalid, please provide a CSV file!");
-                
+                FileValidations.ValidateFileExtension(filePath);
+                                                
                               
-                string[] lines = File.ReadAllLines(filePath);                
-                if (lines.Length == 0)               
-                    throw new Exception("The file is empty, please provide the file!");                    
+                string[] file = File.ReadAllLines(filePath); 
+                FileValidations.ValidateFileContent(file);                  
                 
 
                 List<AccountTranfer> accountTranfers = [];               
-                foreach (string line in lines)
+                foreach (string line in file)
                 {
                     string[] columns = line.Split(',');
                     AccountTranfer accountTranfer = new()
                     {
                         AccountId = columns[0],
                         TransferId = columns[1],
-                        TotalTransferAmount = Convert.ToDecimal(columns[2])
+                        TotalTransferAmount = decimal.Parse(columns[2], CultureInfo.InvariantCulture.NumberFormat)
                     };
 
                     accountTranfers.Add(accountTranfer);

@@ -1,4 +1,5 @@
-﻿using TransferBatch.Models;
+﻿using System.Globalization;
+using TransferBatch.Models;
 
 namespace TransferBatch.Services
 {
@@ -11,36 +12,33 @@ namespace TransferBatch.Services
         public static void CalculateCommission(List<AccountTranfer> accountTransfers)
         {
 
-            List<TransferCommision> transferCommisions = [];           
-            var groupedAccountTransfers = accountTransfers.GroupBy(x =>  x.AccountId);
+            List<TransferCommision> transferCommisions = [];
+
+            var maxTotalTransferAmount = accountTransfers.Max(c => c.TotalTransferAmount);
+
+            Console.WriteLine($"The max total transfer amount: {maxTotalTransferAmount}");
 
 
-            foreach (AccountTranfer accountTransfer in groupedAccountTransfers)
+            foreach (AccountTranfer transfer in accountTransfers)
             {
-
-                // não aplicar comissão para transferencia com maior valor por conta
-                if (accountTransfer.TotalTransferAmount != accountTransfers.Where(x => x.AccountId == accountTransfer.AccountId).Max(c => c.TotalTransferAmount))
+                if (transfer.TotalTransferAmount != maxTotalTransferAmount)
                 {
                     
-                    decimal commission = accountTransfer.TotalTransferAmount * COMMISSION_RATE;
+                    decimal commission = transfer.TotalTransferAmount * COMMISSION_RATE;
 
                     TransferCommision commision = new()
                     {
-                        AccountId = accountTransfer.AccountId,
+                        AccountId = transfer.AccountId,
                         TotalCommision = commission
                     };
 
                     transferCommisions.Add(commision);
 
-                    Console.WriteLine($"The commission for the transfer {accountTransfer.TransferId} is {commission}");
-                }
-                else
-                {
-                    Console.WriteLine($"The transfer {accountTransfer.TransferId} has the highest value for the account {accountTransfer.AccountId}, so it will not be charged a commission");
-                    continue;
-                }  
-             
+                    Console.WriteLine($"The commission for the transfer {transfer.TransferId} : {transfer.AccountId} is {commission}");
+                }   
             }
+
+
         }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TransferBatch.Models;
+using TransferBatch.Validations;
 
 namespace TransferBatch.Services
 {
@@ -15,10 +16,10 @@ namespace TransferBatch.Services
         {           
             try
             {
-                if (string.IsNullOrEmpty(filePath))
-                    throw new Exception("The file path is empty, please provide the file path!");
-                
-                                
+
+                FileValidations.ValidateFilePath(filePath);
+
+
                 using (StreamWriter file = new StreamWriter(filePath))
                 {
                     file.WriteLine("Account_ID,Total_Commission");
