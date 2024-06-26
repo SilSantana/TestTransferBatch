@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using TransferBatch.Models;
+﻿using TransferBatch.Models;
 
 namespace TransferBatch.Services
 {
@@ -7,34 +6,22 @@ namespace TransferBatch.Services
     {
         private const decimal COMMISSION_RATE = 0.10m;
 
-
         // this service is responsible for calculating the commission for each account transfer
         public static void CalculateCommission(List<AccountTranfer> accountTransfers)
         {
 
             List<TransferCommision> transferCommisions = [];
-
             var maxTotalTransferAmount = accountTransfers.Max(c => c.TotalTransferAmount);
 
-            Console.WriteLine($"The max total transfer amount: {maxTotalTransferAmount}");
+            foreach (AccountTranfer transfer in accountTransfers.Where(c => c.TotalTransferAmount < maxTotalTransferAmount))
+            { 
+                TransferCommision transferCommission = new()
+                {
+                    AccountId = transfer.AccountId,
+                    TotalCommision = transfer.TotalTransferAmount * COMMISSION_RATE
+                };
 
-
-            foreach (AccountTranfer transfer in accountTransfers)
-            {
-                if (transfer.TotalTransferAmount != maxTotalTransferAmount)
-                {                    
-                    decimal commission = transfer.TotalTransferAmount * COMMISSION_RATE;
-
-                    TransferCommision commision = new()
-                    {
-                        AccountId = transfer.AccountId,
-                        TotalCommision = commission
-                    };
-
-                    transferCommisions.Add(commision);
-
-                    Console.WriteLine($"The commission for the transfer {transfer.TransferId} : {transfer.AccountId} is {commission}");
-                }   
+                transferCommisions.Add(transferCommission);              
             }
 
             var newTransferCommisions = transferCommisions.GroupBy(c => c.AccountId)
@@ -45,10 +32,10 @@ namespace TransferBatch.Services
                 }).ToList();
 
 
+            Console.WriteLine("The commission was calculated successfully!");
 
             TransferFileWriterService.WriteTransferFile("C:\\projetos\\teste\\TestTransferBatch\\File\\", newTransferCommisions);
         }
-
 
     }
 }

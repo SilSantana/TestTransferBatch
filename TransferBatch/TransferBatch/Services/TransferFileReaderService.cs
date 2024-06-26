@@ -12,11 +12,9 @@ namespace TransferBatch.Services
         {            
             try
             {
-
                 FileValidations.ValidateFilePath(filePath);
 
-                FileValidations.ValidateFileExtension(filePath);
-                                                
+                FileValidations.ValidateFileExtension(filePath);                                                
                               
                 string[] file = File.ReadAllLines(filePath); 
                 FileValidations.ValidateFileContent(file);                  
@@ -34,8 +32,10 @@ namespace TransferBatch.Services
                     };
 
                     accountTranfers.Add(accountTranfer);
-                    Console.WriteLine(string.Join(" | ", accountTranfer));
                 }
+
+
+                Console.WriteLine("The transfers file was read successfully!");
 
                 return accountTranfers;
             }
