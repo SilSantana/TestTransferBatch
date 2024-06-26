@@ -22,8 +22,7 @@ namespace TransferBatch.Services
             foreach (AccountTranfer transfer in accountTransfers)
             {
                 if (transfer.TotalTransferAmount != maxTotalTransferAmount)
-                {
-                    
+                {                    
                     decimal commission = transfer.TotalTransferAmount * COMMISSION_RATE;
 
                     TransferCommision commision = new()
@@ -38,7 +37,16 @@ namespace TransferBatch.Services
                 }   
             }
 
+            var newTransferCommisions = transferCommisions.GroupBy(c => c.AccountId)
+                .Select(c => new TransferCommision
+                {
+                    AccountId = c.Key,
+                    TotalCommision = c.Sum(x => x.TotalCommision)
+                }).ToList();
 
+
+
+            TransferFileWriterService.WriteTransferFile("C:\\projetos\\teste\\TestTransferBatch\\File\\", newTransferCommisions);
         }
 
 
