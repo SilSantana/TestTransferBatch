@@ -2,8 +2,6 @@
 {
     public abstract class FileValidations
     {
-
-
         public static void ValidateFilePath(string? filePath)
         {
             if (string.IsNullOrEmpty(filePath))
@@ -21,7 +19,6 @@
             if (file.Length == 0)
                 throw new Exception("The file is empty, please provide the file!");
         }
-
 
     }
 }

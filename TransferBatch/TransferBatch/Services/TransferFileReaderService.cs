@@ -6,8 +6,6 @@ namespace TransferBatch.Services
 {
     public abstract class TransferFileReaderService
     {
-
-        // this method is responsible for reading the transfer file and creating the account transfer objects
         public static List<AccountTranfer> ReadTransferFile(string? filePath)
         {            
             try
@@ -34,14 +32,13 @@ namespace TransferBatch.Services
                     accountTranfers.Add(accountTranfer);
                 }
 
-
                 Console.WriteLine("The transfers file was read successfully!");
 
                 return accountTranfers;
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while reading the file: {ex.Message}", ex);
+                throw new Exception($"An error occurred while reading the file: {ex.Message}");
             }
         }
 

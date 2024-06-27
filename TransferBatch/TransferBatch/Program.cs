@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using TransferBatch.Models;
 using TransferBatch.Services;
 
 
@@ -9,10 +10,11 @@ Console.WriteLine("Inform the CVS path file: ");
 string? filePath = Console.ReadLine();
 
 
-var accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
+List<AccountTranfer> accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
 
+List<TransferCommision> commissions = CommissionCalculateService.CalculateCommission(accountTransfers);
 
-CommissionCalculateService.CalculateCommission(accountTransfers);
+TransferFileWriterService.WriteTransferFile(filePath, commissions);
 
 
 Console.WriteLine("***************** End Calculator Account Transfer Commission ******************************");

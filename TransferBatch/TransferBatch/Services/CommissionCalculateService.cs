@@ -6,10 +6,8 @@ namespace TransferBatch.Services
     {
         private const decimal COMMISSION_RATE = 0.10m;
 
-        // this service is responsible for calculating the commission for each account transfer
-        public static void CalculateCommission(List<AccountTranfer> accountTransfers)
+        public static List<TransferCommision> CalculateCommission(List<AccountTranfer> accountTransfers)
         {
-
             List<TransferCommision> transferCommisions = [];
             var maxTotalTransferAmount = accountTransfers.Max(c => c.TotalTransferAmount);
 
@@ -24,7 +22,7 @@ namespace TransferBatch.Services
                 transferCommisions.Add(transferCommission);              
             }
 
-            var newTransferCommisions = transferCommisions.GroupBy(c => c.AccountId)
+            List<TransferCommision> newTransferCommisions = transferCommisions.GroupBy(c => c.AccountId)
                 .Select(c => new TransferCommision
                 {
                     AccountId = c.Key,
@@ -34,7 +32,7 @@ namespace TransferBatch.Services
 
             Console.WriteLine("The commission was calculated successfully!");
 
-            TransferFileWriterService.WriteTransferFile("C:\\projetos\\teste\\TestTransferBatch\\File\\", newTransferCommisions);
+            return newTransferCommisions;            
         }
 
     }
