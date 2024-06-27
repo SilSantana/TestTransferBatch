@@ -10,18 +10,26 @@ Output file structure:
 
 
 ## Create Image in docker
-### Run the command below to create the projoet image in docker. This command must be executed within the directory where the application's dockerfile is located.
+-> Run the command below to create the projoet image in docker. This command must be executed within the directory where the application's dockerfile is located.
 
 docker build -t [imagename] .
 
 ## Create the container
-### Run this command to create the container from the created image. This command must be executed in the same directory where the dockerfile is located.
+-> Run this command to create the container from the image. This command must be executed in the same directory where the dockerfile is located.
 
-docker run [imagename]
+docker run --name [container_name]  [svfilepath]
 
 ## Create the container and run the application passing input parameters
-### If the application receives an input parameter during execution, it must be informed
+-> If the application receives an input parameter during execution, it must be informed
 
-docker run docker run [imagename] [svfilepath]
+docker run --name [container_name] [imagename] [svfilepath]
+
+## Application framework
+.Net version: 8.0
+C# version: 12.0
+
+## IDE Tool
+Visual studio version: 2022
+
 
 

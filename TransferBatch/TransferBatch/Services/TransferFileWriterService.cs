@@ -13,7 +13,12 @@ namespace TransferBatch.Services
             {
                 FileValidations.ValidateFilePath(filePath);
 
-                var path = Path.GetDirectoryName(filePath);  
+                var path = Path.GetDirectoryName(filePath);
+
+                Console.WriteLine("WriteTransferFile FilePath: " + filePath);
+
+                Console.WriteLine("WriteTransferFile Path: " + path);
+
                 filePath = path +@"\" + FILENAME;
 
                 using (StreamWriter file = new(filePath))

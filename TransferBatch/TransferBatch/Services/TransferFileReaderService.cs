@@ -12,9 +12,12 @@ namespace TransferBatch.Services
             {
                 FileValidations.ValidateFilePath(filePath);
 
-                FileValidations.ValidateFileExtension(filePath);                                                
-                              
+                FileValidations.ValidateFileExtension(filePath);
+
+                Console.WriteLine("ReadTransferFile FilePath: " + filePath);
+
                 string[] file = File.ReadAllLines(filePath); 
+
                 FileValidations.ValidateFileContent(file);                  
                 
 
