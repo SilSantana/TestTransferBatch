@@ -3,21 +3,20 @@ using TransferBatch.Models;
 using TransferBatch.Services;
 
 
-Console.WriteLine("***************** Calculator Account Transfer Commission ******************************");
+class Program
+{
+    static void Main(string[] args)
+    {           
+        string filePath = args[0];
 
-Console.WriteLine("Inform the CVS path file: ");
+        List<AccountTranfer> accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
 
-string? filePath = Console.ReadLine();
+        List<TransferCommision> commissions = CommissionCalculateService.CalculateCommission(accountTransfers);
 
+        TransferFileWriterService.WriteTransferFile(filePath, commissions);
+    }
+}
 
-List<AccountTranfer> accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
-
-List<TransferCommision> commissions = CommissionCalculateService.CalculateCommission(accountTransfers);
-
-TransferFileWriterService.WriteTransferFile(filePath, commissions);
-
-
-Console.WriteLine("***************** End Calculator Account Transfer Commission ******************************");
 
 
 
