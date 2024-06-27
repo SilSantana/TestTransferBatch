@@ -21,6 +21,8 @@ namespace TransferBatch.Services
                     foreach (TransferCommision transferCommision in transferCommisions)
                     {
                         file.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
+
+                        Console.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
                     }
                 }
 
