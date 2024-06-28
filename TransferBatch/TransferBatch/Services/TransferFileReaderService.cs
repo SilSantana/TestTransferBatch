@@ -20,9 +20,12 @@ namespace TransferBatch.Services
                 
 
                 List<AccountTranfer> accountTranfers = [];               
-                foreach (string line in file)
+                foreach (string transfer in file)
                 {
-                    string[] columns = line.Split(',');
+                    string[] columns = transfer.Split(',');
+
+                    FileValidations.IsValidFileContent(columns);
+
                     AccountTranfer accountTranfer = new()
                     {
                         AccountId = columns[0],
@@ -38,7 +41,7 @@ namespace TransferBatch.Services
             {
                 throw new Exception($"An error occurred while reading the file: {ex.Message}");
             }
-        }
+        }      
 
     }
 }

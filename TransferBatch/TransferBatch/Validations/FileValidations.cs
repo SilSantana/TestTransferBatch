@@ -20,5 +20,20 @@
                 throw new Exception("The file is empty, please provide the file!");
         }
 
+        public static void IsValidFileContent(string[] itens)
+        {
+            if (string.IsNullOrWhiteSpace(itens[0]))
+                throw new Exception("The content file path is invalid, please provide a valid AccountId!");
+
+            if (string.IsNullOrWhiteSpace(itens[1]))
+                throw new Exception("The content file path is invalid, please provide a valid TransferId!");
+
+            if (string.IsNullOrWhiteSpace(itens[2]))
+                throw new Exception("The content file path is invalid, please provide a valid Total Transfer Amount!");
+
+            if (!decimal.TryParse(itens[2], out _))
+                throw new Exception("The content file path is invalid, please provide a valid Total Transfer Amount!");
+        }
+
     }
 }
