@@ -15,11 +15,9 @@ namespace TransferBatch.Services
 
                 var path = Path.GetDirectoryName(filePath);
 
-                Console.WriteLine("WriteTransferFile FilePath: " + filePath);
+                Random random = new();
 
-                Console.WriteLine("WriteTransferFile Path: " + path);
-
-                filePath = path +@"\" + FILENAME;
+                filePath = path +@"\" + random.Next(1,10000) + FILENAME;
 
                 using (StreamWriter file = new(filePath))
                 {                   
@@ -30,8 +28,6 @@ namespace TransferBatch.Services
                         Console.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
                     }
                 }
-
-                Console.WriteLine("The commission file was created successfully!");
             }
             catch (Exception ex)
             {

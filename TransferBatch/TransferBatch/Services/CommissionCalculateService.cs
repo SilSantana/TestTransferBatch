@@ -21,18 +21,13 @@ namespace TransferBatch.Services
 
                 transferCommisions.Add(transferCommission);              
             }
-
-            List<TransferCommision> newTransferCommisions = transferCommisions.GroupBy(c => c.AccountId)
+                            
+            return transferCommisions.GroupBy(c => c.AccountId)
                 .Select(c => new TransferCommision
                 {
                     AccountId = c.Key,
                     TotalCommision = c.Sum(x => x.TotalCommision)
-                }).ToList();
-
-
-            Console.WriteLine("The commission was calculated successfully!");
-
-            return newTransferCommisions;            
+                }).ToList();          
         }
 
     }

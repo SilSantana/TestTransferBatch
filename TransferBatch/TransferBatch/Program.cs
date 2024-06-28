@@ -9,8 +9,6 @@ class Program
     {           
         string filePath = args[0];
 
-        Console.WriteLine("FilePath: " + filePath);
-
         List<AccountTranfer> accountTransfers = TransferFileReaderService.ReadTransferFile(filePath);
 
         List<TransferCommision> commissions = CommissionCalculateService.CalculateCommission(accountTransfers);
@@ -18,9 +16,3 @@ class Program
         TransferFileWriterService.WriteTransferFile(filePath, commissions);
     }
 }
-
-
-
-
-
-

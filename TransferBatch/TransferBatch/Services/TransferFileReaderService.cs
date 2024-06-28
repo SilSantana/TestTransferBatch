@@ -14,10 +14,8 @@ namespace TransferBatch.Services
 
                 FileValidations.ValidateFileExtension(filePath);
 
-                Console.WriteLine("ReadTransferFile FilePath: " + filePath);
 
                 string[] file = File.ReadAllLines(filePath); 
-
                 FileValidations.ValidateFileContent(file);                  
                 
 
@@ -31,11 +29,8 @@ namespace TransferBatch.Services
                         TransferId = columns[1],
                         TotalTransferAmount = decimal.Parse(columns[2], CultureInfo.InvariantCulture.NumberFormat)
                     };
-
                     accountTranfers.Add(accountTranfer);
                 }
-
-                Console.WriteLine("The transfers file was read successfully!");
 
                 return accountTranfers;
             }

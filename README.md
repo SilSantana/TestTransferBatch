@@ -9,6 +9,12 @@ Output file structure:
 <Account_ID>,<Total_Commission>
 
 
+## Execute by Prompt command
+-> Run the command bellow to execute the console application. This command must be executed within the directory where the executable file is.
+
+TransferBatch.exe [svfilepath]
+
+
 ## Create Image in docker
 -> Run the command below to create the projoet image in docker. This command must be executed within the directory where the application's dockerfile is located.
 
@@ -26,10 +32,10 @@ docker run --name [container_name] [imagename] [svfilepath]
 
 ## Application framework
 .Net version: 8.0
+
 C# version: 12.0
 
 ## IDE Tool
 Visual studio version: 2022
-
 
 
