@@ -20,14 +20,19 @@ namespace TransferBatch.Services
                 };
 
                 transferCommisions.Add(transferCommission);              
+            }                     
+            
+            if (transferCommisions.Count > 0)
+            {
+                return transferCommisions.GroupBy(c => c.AccountId)
+                    .Select(c => new TransferCommision
+                   {
+                       AccountId = c.Key,
+                       TotalCommision = c.Sum(x => x.TotalCommision)
+                   }).ToList();
             }
-                            
-            return transferCommisions.GroupBy(c => c.AccountId)
-                .Select(c => new TransferCommision
-                {
-                    AccountId = c.Key,
-                    TotalCommision = c.Sum(x => x.TotalCommision)
-                }).ToList();          
+
+            return null;                    
         }
 
     }

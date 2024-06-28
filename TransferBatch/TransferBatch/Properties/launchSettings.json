@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TransferBatch": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
