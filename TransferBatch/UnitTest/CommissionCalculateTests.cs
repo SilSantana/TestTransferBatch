@@ -49,7 +49,7 @@ namespace UnitTest
 
 
         [TestMethod]
-        public void CalculateCommission_WhenOneTransation_Should_ReturnNull()
+        public void CalculateCommission_WhenOneTransation_Should_ReturnEmpty()
         {
             // arrange
             List<AccountTranfer> accountTransfers = new()
@@ -66,7 +66,8 @@ namespace UnitTest
             var result = CommissionCalculateService.CalculateCommission(accountTransfers);
 
             //assert
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Count, 0);
         }
 
     }

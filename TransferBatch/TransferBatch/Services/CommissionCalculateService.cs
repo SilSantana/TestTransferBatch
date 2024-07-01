@@ -32,7 +32,7 @@ namespace TransferBatch.Services
                    }).ToList();
             }
 
-            return null;                    
+            return new List<TransferCommision>();
         }
 
     }

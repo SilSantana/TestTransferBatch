@@ -28,10 +28,7 @@
             if (string.IsNullOrWhiteSpace(itens[1]))
                 throw new Exception("The content file path is invalid, please provide a valid TransferId!");
 
-            if (string.IsNullOrWhiteSpace(itens[2]))
-                throw new Exception("The content file path is invalid, please provide a valid Total Transfer Amount!");
-
-            if (!decimal.TryParse(itens[2], out _))
+            if (string.IsNullOrWhiteSpace(itens[2]) || !decimal.TryParse(itens[2], out _))
                 throw new Exception("The content file path is invalid, please provide a valid Total Transfer Amount!");
         }
 
