@@ -13,6 +13,6 @@ class Program
 
         List<TransferCommision> commissions = CommissionCalculateService.CalculateCommission(accountTransfers);
 
-        TransferFileWriterService.WriteTransferFile(filePath, commissions);
+        Task.Run(async () => await TransferFileWriterService.WriteTransferFileAsync(filePath, commissions)).GetAwaiter().GetResult();
     }
 }

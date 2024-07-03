@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 using TransferBatch.Models;
 using TransferBatch.Validations;
 
@@ -14,25 +16,22 @@ namespace TransferBatch.Services
 
                 FileValidations.ValidateFileExtension(filePath);
 
-
-                string[] file = File.ReadAllLines(filePath); 
-                FileValidations.ValidateFileContent(file);                  
-                
-
-                List<AccountTranfer> accountTranfers = [];               
-                foreach (string transfer in file)
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                    string[] columns = transfer.Split(',');
+                    Delimiter = ",",
+                    HasHeaderRecord = false
+                };
 
-                    FileValidations.IsValidFileContent(columns);
+                List<AccountTranfer> accountTranfers = [];
 
-                    AccountTranfer accountTranfer = new()
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecords<AccountTranfer>();
+                    foreach (var record in records)
                     {
-                        AccountId = columns[0],
-                        TransferId = columns[1],
-                        TotalTransferAmount = decimal.Parse(columns[2], CultureInfo.InvariantCulture.NumberFormat)
-                    };
-                    accountTranfers.Add(accountTranfer);
+                        accountTranfers.Add(record);
+                    }
                 }
 
                 return accountTranfers;

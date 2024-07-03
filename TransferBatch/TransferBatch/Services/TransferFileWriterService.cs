@@ -1,4 +1,5 @@
-﻿using TransferBatch.Models;
+﻿using System.Text;
+using TransferBatch.Models;
 using TransferBatch.Validations;
 
 namespace TransferBatch.Services
@@ -7,25 +8,24 @@ namespace TransferBatch.Services
     {
         private const string FILENAME = "transferbatch.transfers.csv";
 
-        public static void WriteTransferFile(string? filePath, List<TransferCommision> transferCommisions)
+        public static async Task WriteTransferFileAsync(string? filePath, List<TransferCommision> transferCommisions)
         {           
             try
             {
                 FileValidations.ValidateFilePath(filePath);
 
                 var path = Path.GetDirectoryName(filePath);
-
                 Random random = new();
+                filePath = Path.Combine(path, random.Next(1, 10000) + FILENAME);
 
-                filePath = path +@"\" + random.Next(1,10000) + FILENAME;
-
-                using (StreamWriter file = new(filePath))
-                {                   
+                int bufferSize = 4096; // Size buffer in bytes
+                using (StreamWriter file = new(filePath, append: false, encoding: Encoding.UTF8, bufferSize))
+                {
                     foreach (TransferCommision transferCommision in transferCommisions)
                     {
-                        file.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
-
+                        var commission = $"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}";
                         Console.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
+                        await file.WriteLineAsync(commission);
                     }
                 }
             }

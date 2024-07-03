@@ -8,31 +8,30 @@ namespace TransferBatch.Services
 
         public static List<TransferCommision> CalculateCommission(List<AccountTranfer> accountTransfers)
         {
-            List<TransferCommision> transferCommisions = [];
+            if (accountTransfers == null || accountTransfers.Count == 0)
+                return new();
+
+
             var maxTotalTransferAmount = accountTransfers.Max(c => c.TotalTransferAmount);
+            var transferCommisions = new Dictionary<string, decimal>();
 
-            foreach (AccountTranfer transfer in accountTransfers.Where(c => c.TotalTransferAmount < maxTotalTransferAmount))
-            { 
-                TransferCommision transferCommission = new()
-                {
-                    AccountId = transfer.AccountId,
-                    TotalCommision = transfer.TotalTransferAmount * COMMISSION_RATE
-                };
-
-                transferCommisions.Add(transferCommission);              
-            }                     
-            
-            if (transferCommisions.Count > 0)
+            foreach (var transfer in accountTransfers)
             {
-                return transferCommisions.GroupBy(c => c.AccountId)
-                    .Select(c => new TransferCommision
-                   {
-                       AccountId = c.Key,
-                       TotalCommision = c.Sum(x => x.TotalCommision)
-                   }).ToList();
+                if (transfer.TotalTransferAmount < maxTotalTransferAmount)
+                {
+                    if (!transferCommisions.ContainsKey(transfer.AccountId))
+                    {
+                        transferCommisions[transfer.AccountId] = 0;
+                    }
+                    transferCommisions[transfer.AccountId] += transfer.TotalTransferAmount * COMMISSION_RATE;
+                }
             }
 
-            return new List<TransferCommision>();
+            return transferCommisions.Select(c => new TransferCommision
+            {
+                AccountId = c.Key,
+                TotalCommision = c.Value
+            }).ToList();
         }
 
     }
