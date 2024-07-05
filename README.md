@@ -39,3 +39,15 @@ C# version: 12.0
 Visual studio version: 2022
 
 
+## CsvHelpér package
+-> Library used to facilitate the reading and writing of large files, being fast, flexible with settings that are easy to apply and use as needed. 
+Low memory consumption, reading records will yield results so only one record is in memory at a time.
+It has good usage references, supporting documentation and the project continues to evolve with a large number of contributors.
+
+
+## StreamWriter
+-> It is a .NET class that allows you to easily write files using objects with simple serialization. 
+Allows writing to occur asynchronously, keeping the application responsive.
+Allows writing via configurable memory buffers, and improves writing efficiency by reducing the number of I/O operations.
+
+

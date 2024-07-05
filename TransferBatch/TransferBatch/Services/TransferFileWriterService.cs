@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using CsvHelper;
+using System.Globalization;
+using System.Text;
 using TransferBatch.Models;
 using TransferBatch.Validations;
 
@@ -27,6 +29,29 @@ namespace TransferBatch.Services
                         Console.WriteLine($"{transferCommision.AccountId},{transferCommision.TotalCommision.ToString("N0")}");
                         await file.WriteLineAsync(commission);
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while writing the file: {ex.Message}");
+            }
+        }
+
+
+        public static void WriteTransferFileByCsvHelper(string filePath, List<TransferCommision> transferCommisions)
+        {
+            try
+            {
+                FileValidations.ValidateFilePath(filePath);
+
+                var path = Path.GetDirectoryName(filePath);
+                Random random = new();
+                filePath = Path.Combine(path, random.Next(1, 10000) + FILENAME);
+
+                using (var writer = new StreamWriter(filePath))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(transferCommisions);
                 }
             }
             catch (Exception ex)
