@@ -22,19 +22,12 @@ namespace TransferBatch.Services
                     HasHeaderRecord = false
                 };
 
-                List<AccountTranfer> accountTranfers = [];
-
                 using (var reader = new StreamReader(filePath))
                 using (var csv = new CsvReader(reader, config))
                 {
                     var records = csv.GetRecords<AccountTranfer>();
-                    foreach (var record in records)
-                    {
-                        accountTranfers.Add(record);
-                    }
+                    return records.ToList();
                 }
-
-                return accountTranfers;
             }
             catch (Exception ex)
             {

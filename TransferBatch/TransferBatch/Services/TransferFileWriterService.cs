@@ -20,7 +20,7 @@ namespace TransferBatch.Services
                 Random random = new();
                 filePath = Path.Combine(path, random.Next(1, 10000) + FILENAME);
 
-                int bufferSize = 4096; // Size buffer in bytes
+                int bufferSize = 8192; // Size buffer in bytes
                 using (StreamWriter file = new(filePath, append: false, encoding: Encoding.UTF8, bufferSize))
                 {
                     foreach (TransferCommision transferCommision in transferCommisions)

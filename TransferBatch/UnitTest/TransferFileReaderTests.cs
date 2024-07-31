@@ -10,7 +10,7 @@ namespace UnitTest
         public void ReadTransferFile_Should_ReturnSuccesfully()
         {
             // arrange
-            var filePath = @"C:\Users\Asus\Desktop\teste\sample.transfers.csv";
+            var filePath = @"C:\projetos\teste\TestTransferBatch\File\sample.transfers.csv";
 
             //action
             var result = TransferFileReaderService.ReadTransferFile(filePath);
@@ -25,7 +25,7 @@ namespace UnitTest
         public void ReadTransferFile_WhenNotFoundFile_Should_ReturnExecption()
         {
             // arrange
-            var filePath = @"C:\Users\Asus\Desktop\teste\";
+            var filePath = @"C:\projetos\teste\TestTransferBatch\File\";
 
             //action and assert
             Assert.ThrowsException<Exception>(() =>
@@ -38,7 +38,7 @@ namespace UnitTest
         public void ReadTransferFile_WhenInvalidContentFile_Should_ReturnExecption()
         {
             // arrange
-            var filePath = @"C:\Users\Asus\Desktop\teste\sample.transfersv2.csv";
+            var filePath = @"C:\projetos\teste\TestTransferBatch\File\sample.transfersv2.csv";
 
             //action and assert
             Assert.ThrowsException<Exception>(() =>
